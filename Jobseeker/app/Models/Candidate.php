@@ -12,6 +12,6 @@ class Candidate extends Model
     protected $primary = 'candidate_id';
 
     protected $fillable = [
-        'full_name', 'dob', 'pob', 'gender', 'year_exp', 'last_salary'
+        'candidate_id', 'full_name', 'dob', 'pob', 'gender', 'year_exp', 'last_salary'
     ];
 }

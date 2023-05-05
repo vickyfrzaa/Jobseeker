@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('candidate', function (Blueprint $table) {
             $table->id('candidate_id');
             $table->string('full_name');
-            $table->string('dob');
+            $table->date('dob');
             $table->string('pob');
             $table->string('gender');
-            $table->string('year_exp');
+            $table->date('year_exp');
             $table->string('last_salary')->nullable();
             $table->timestamps();
         });

@@ -4,23 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @if($errors->any())
-            <div class="pt-3">
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $item)
-                            <li>{{ $item }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            @endif
             <div class="card">
                 <h3 class="card-header text-center">
-                    New User
+                    New Candidate
                 </h3>
                 <div class="card-body">
-                    <form  method="get" enctype = "multipart/form-data" action="{{ url('home') }}">
+                    <form method="post" enctype="multipart/form-data" action="{{ route('save') }}">
                         @csrf
                         <div class="mb-3 row">
                             <label for="full_name" class="col-sm-2 col-form-label">Full Name</label>
@@ -30,8 +19,8 @@
                         </div>
                         <div class="mb-3 row">
                             <label for="dob" class="col-sm-2 col-form-label">DOB</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="dob"  id="dob">
+                            <div class="col-sm-10" id="datepicker">
+                                <input type="date" class="form-control" name="dob" id="dob">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -47,9 +36,9 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="exp" class="col-sm-2 col-form-label">Year Exp</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="year_exp" id="exp">
+                            <label for="year_exp" class="col-sm-2 col-form-label">Year Exp</label>
+                            <div class="col-sm-10" id="datepicker">
+                                <input type="date" class="form-control" name="year_exp" id="year_exp">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -67,6 +56,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#datepicker').datepicker();
+    $('#datepicker').on('changeDate', function() {
+        $('#dob').val(
+            $('#datepicker').datepicker('getFormattedDate')
+        );
+    });
+
+</script>
 <!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

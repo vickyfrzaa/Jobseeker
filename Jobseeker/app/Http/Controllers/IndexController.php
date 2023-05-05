@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Gender;
 use App\Models\Candidate;
+use Illuminate\Support\Facades\Auth;
+use str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -16,11 +19,8 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Candidates';
-        $data['q'] = $request->get('q');
-        $data['candidates'] = Candidate::Where('full_name', 'like'. '%' . $data['q'] . '%')
-        ->get();
-        return view('home', $data);
+        $candidates = Candidate::paginate(3);
+        return view('home', compact('candidates'));
     }
 
     /**
@@ -30,9 +30,7 @@ class IndexController extends Controller
      */
     public function create(Request $request)
     {
-        $data['title'] = 'candidates';
-        $data['candidates'] = Candidate::all();
-        return view('create', $data);
+        return view('candidate.create');
     }
 
     /**
@@ -43,35 +41,19 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'candidate_id'=>'required|numeric|unique:Candidate,candidate_id',
-            'full_name'=>'required',
-            'dob'=>'required',
-            'pob'=>'required',
-            'gender'=>'required',
-            'year_exp'=>'required',
-            'last_salary'=>'required'
-        ],[
-            'candidate_id.required' => 'Field Is Empty',
-            'full_name.required' => 'Field Is Empty',
-            'dob.required' => 'Field Is Empty',
-            'pob.required' => 'Field Is Empty',
-            'gender.required' => 'Field Is Empty',
-            'year_exp.required' => 'Field Is Empty',
-            'last_salary.required' => 'Field Is Empty',
+        // dd($request->all());
+        Candidate::create([
+            'full_name'=>$request->full_name,
+            'dob'=>$request->dob,
+            'pob'=>$request->pob,
+            'gender'=>$request->gender,
+            'year_exp'=>$request->year_exp,
+            'last_salary'=>$request->last_salary
         ]);
-        $data = [
-            'candidate_id' => $request->id,
-            'full_name' => $request->full_name,
-            'dob' => $request->dob,
-            'pob' => $request->pob,
-            'gender' => $request->gender,
-            'year_exp' => $request->year_exp,
-            'last_salary' => $request->last_salary,
-        ];
 
-        Candidate::create($data);
-        return 'Hi';
+        return redirect('home')
+        ->with('danger', 'Data Tidak Berhasil Disimpan!')
+        ->with('success', 'Data Berhasil Disimpan!');
     }
 
     /**
@@ -93,7 +75,8 @@ class IndexController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editCandidates = Candidate::Where($id);
+        return view('candidate.edit', compact('editCandidates'));
     }
 
     /**
@@ -105,7 +88,12 @@ class IndexController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $upCandidates = Candidate::Where($id);
+        $upCandidates->update($request->all());
+
+        return redirect('home')
+        ->with('danger', 'Data Tidak Berhasil Diupdate!')
+        ->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -116,6 +104,9 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $del = Candidate::Where($id);
+        $del->delete();
+
+        return back('home');
     }
 }
