@@ -5,8 +5,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <h3 class="card-header text-center">
-                    New Candidate
+                <h3 class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col-md-6">
+                            <a href="{{ route('home') }}" class="btn btn-danger fw-bold">
+                                <i class="fas fa-chevron-left me-2"></i>
+                                Back
+                            </a>
+                        </div>
+                        <div class="col-md-6 pt-2 fw-bold">
+                            New Candidate
+                        </div>
+                    </div>
                 </h3>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data" action="{{ route('save') }}">
@@ -48,7 +58,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2 col-6 mx-auto py-3">
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-success fw-bold" type="submit">Save</button>
                         </div>
                     </form>
                 </div>

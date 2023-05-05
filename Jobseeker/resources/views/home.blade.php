@@ -4,19 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @if($errors->any())
-            <div class="alert alert-danger d-flex align-items-center pt-3" role="alert">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-                    <use xlink:href="#exclamation-triangle-fill" /></svg>
-                <ul>
-                    @foreach($errors->all() as $item)
-                    <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
             <div class="btn-add py-3">
-                <a href="{{ route('create') }}" class="btn btn-primary">Add User</a>
+                <a href="{{ route('create') }}" class="btn btn-primary">Add Candidate</a>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -34,22 +23,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach($candidates as $item => $candidate) --}}
+                            <?php $no = 1; ?>
+                            {{-- @foreach ($candidates as $item) --}}
                             <tr class="text-center">
-                                <td>a</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>a</td>
-                                {{-- <th>{{ $loop->iteration }}</th>
-                                <td>{{ $candidate->full_name }}</td>
-                                <td>{{ date('d-m-y', strtotime($candidate->dob)) }}</td>
-                                <td>{{ $candidate->pob }}</td>
-                                <td>{{ $candidate->gender }}</td>
-                                <td>{{ date('d-m-y', strtotime($candidate->year_exp)) }}</td>
-                                <td>{{ $candidate->last_salary }}</td> --}}
+                                <th>{{ $no++ }}</th>
+                                <td>Vicky Fahreza Racasiwi</td>
+                                <td>12-12-1997</td>
+                                <td>Batam</td>
+                                <td>Male</td>
+                                <td>01-02-2023</td>
+                                <td>7500000</td>
+                                {{-- <td>{{ $item->full_name }}</td>
+                                <td>{{ date('d-m-y', strtotime($item->dob)) }}</td>
+                                <td>{{ $item->pob }}</td>
+                                <td>{{ $item->gender }}</td>
+                                <td>{{ date('d-m-y', strtotime($item->year_exp)) }}</td>
+                                <td>{{ $item->last_salary }}</td> --}}
                                 <td>
                                     {{-- <a href="{{ url('edit', $item->id) }}" class="btn btn-success me-3"> --}}
                                     <a href="{{ url('edit') }}" class="btn btn-success me-3">
@@ -65,8 +54,8 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer text-center">
-                {{ $candidates->links() }}
+            <div class="card-footer">
+                {{-- {{ $candidates->links() }} --}}
             </div>
         </div>
     </div>

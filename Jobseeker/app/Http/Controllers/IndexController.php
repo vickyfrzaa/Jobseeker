@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Gender;
 use App\Models\Candidate;
 use Illuminate\Support\Facades\Auth;
-use str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -17,10 +15,11 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $candidates = Candidate::paginate(3);
-        return view('home', compact('candidates'));
+        return view('home')
+        ->with('candidates', $candidates);
     }
 
     /**
@@ -42,6 +41,14 @@ class IndexController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $data = $request->validate([
+            'full_name' => 'required',
+            'dob' => 'required',
+            'pob' => 'required',
+            'gender' => 'required',
+            'year_exp' => 'required',
+            'last_salary' => 'required',
+        ]);
         Candidate::create([
             'full_name'=>$request->full_name,
             'dob'=>$request->dob,
@@ -52,8 +59,7 @@ class IndexController extends Controller
         ]);
 
         return redirect('home')
-        ->with('danger', 'Data Tidak Berhasil Disimpan!')
-        ->with('success', 'Data Berhasil Disimpan!');
+        ->with('toast_success', 'Data Berhasil Disimpan!');
     }
 
     /**
@@ -92,8 +98,7 @@ class IndexController extends Controller
         $upCandidates->update($request->all());
 
         return redirect('home')
-        ->with('danger', 'Data Tidak Berhasil Diupdate!')
-        ->with('success', 'Data Berhasil Diupdate!');
+        ->with('toast_success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -107,6 +112,7 @@ class IndexController extends Controller
         $del = Candidate::Where($id);
         $del->delete();
 
-        return back('home');
+        return back('home')
+        ->with('info', 'Data Berhasil Dihapus!');
     }
 }
