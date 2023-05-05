@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="col">
                     <h2 class="pt-4">
-                        <img src="img/6.png" alt="" class="logo-footer">
+                        <img src="{{ asset('img/6.png') }}" alt="" class="logo-footer">
                     </h2>
                 </div>
             </div>

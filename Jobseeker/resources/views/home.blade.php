@@ -24,38 +24,31 @@
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            {{-- @foreach ($candidates as $item) --}}
+                            @foreach ($candidates as $item)
                             <tr class="text-center">
-                                <th>{{ $no++ }}</th>
-                                <td>Vicky Fahreza Racasiwi</td>
-                                <td>12-12-1997</td>
-                                <td>Batam</td>
-                                <td>Male</td>
-                                <td>01-02-2023</td>
-                                <td>7500000</td>
-                                {{-- <td>{{ $item->full_name }}</td>
-                                <td>{{ date('d-m-y', strtotime($item->dob)) }}</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item->full_name }}</td>
+                                <td>{{ date('d-m-Y', strtotime($item->dob)) }}</td>
                                 <td>{{ $item->pob }}</td>
                                 <td>{{ $item->gender }}</td>
-                                <td>{{ date('d-m-y', strtotime($item->year_exp)) }}</td>
-                                <td>{{ $item->last_salary }}</td> --}}
+                                <td>{{ date('d-m-Y', strtotime($item->year_exp)) }}</td>
+                                <td>{{ $item->last_salary }}</td>
                                 <td>
-                                    {{-- <a href="{{ url('edit', $item->id) }}" class="btn btn-success me-3"> --}}
-                                    <a href="{{ url('edit') }}" class="btn btn-success me-3">
+                                    <a href="{{ url('edit', $item->candidate_id) }}" class="btn btn-success me-3">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ url('delete') }}" class="btn btn-danger ms-3">
+                                    <a href="{{ url('destroy', $item->candidate_id) }}" class="btn btn-danger ms-3">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
                             </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card-footer">
-                {{-- {{ $candidates->links() }} --}}
+                {{ $candidates->links() }}
             </div>
         </div>
     </div>

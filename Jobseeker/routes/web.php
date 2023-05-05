@@ -20,9 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
 Route::post('/create', [App\Http\Controllers\IndexController::class, 'create'])->name('create');
 Route::get('/create', [App\Http\Controllers\IndexController::class, 'create'])->name('create');
 Route::post('/save', [App\Http\Controllers\IndexController::class, 'store'])->name('save');
-Route::get('/edit/{$id}', [App\Http\Controllers\IndexController::class, 'edit'])->name('edit');
-Route::post('/update/{$id}', [App\Http\Controllers\IndexController::class, 'update'])->name('update');
-Route::get('/delete/{$id}', [App\Http\Controllers\IndexController::class, 'destroy'])->name('destroy');
+Route::get('/edit/{candidate_id}', [App\Http\Controllers\IndexController::class, 'edit'])->name('edit');
+Route::post('/update/{candidate_id}', [App\Http\Controllers\IndexController::class, 'update'])->name('update');
+Route::get('/destroy/{candidate_id}', [App\Http\Controllers\IndexController::class, 'destroy'])->name('destroy');

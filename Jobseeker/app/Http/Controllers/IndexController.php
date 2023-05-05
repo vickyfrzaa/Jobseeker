@@ -79,10 +79,14 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($candidate_id)
     {
-        $editCandidates = Candidate::Where($id);
-        return view('candidate.edit', compact('editCandidates'));
+        $editCandidates = DB::table('candidate')
+        ->where('candidate_id', $candidate_id)
+        ->get();
+
+        return view('candidate.edit')
+        ->with('editCandidates', $editCandidates);
     }
 
     /**
@@ -92,10 +96,18 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $upCandidates = Candidate::Where($id);
-        $upCandidates->update($request->all());
+        $upCandidates = DB::table('candidate')
+        ->where('candidate_id', $request->candidate_id)
+        ->update([
+            'full_name'=>$request->full_name,
+            'dob'=>$request->dob,
+            'pob'=>$request->pob,
+            'gender'=>$request->gender,
+            'year_exp'=>$request->year_exp,
+            'last_salary'=>$request->last_salary
+        ]);
 
         return redirect('home')
         ->with('toast_success', 'Data Berhasil Diupdate!');
@@ -107,12 +119,13 @@ class IndexController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($candidate_id)
     {
-        $del = Candidate::Where($id);
-        $del->delete();
+        $del = DB::table('candidate')
+        ->where('candidate_id', $candidate_id)
+        ->delete();
 
-        return back('home')
+        return redirect('home')
         ->with('info', 'Data Berhasil Dihapus!');
     }
 }
